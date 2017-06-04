@@ -1,0 +1,9 @@
+{
+  "name": "on-thumbnail-deleted-function",
+  "version": "1.0.0",
+  "main": "handler.js",
+  "license": "MIT",
+  "dependencies": {
+    "firebase-admin": "^4.1.2"
+  }
+}

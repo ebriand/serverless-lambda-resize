@@ -1,0 +1,9 @@
+{
+  "name": "on-image-added-function",
+  "version": "1.0.0",
+  "main": "handler.js",
+  "license": "MIT",
+  "dependencies": {
+    "imagemagick": "^0.1.3"
+  }
+}

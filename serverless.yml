@@ -1,0 +1,59 @@
+service: serverless-gallery
+
+custom:
+  origin-bucket: zenika-serverless-origin
+  thumbnail-bucket: zenika-serverless-thumbnail
+  firebase: https://gallery-ec238.firebaseio.com
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  region: eu-west-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource: "*"
+functions:
+  on-image-added:
+    handler: on-image-added/handler.onImageAdded
+    memorySize: 128
+    timeout: 5
+    environment:
+      BUCKET: ${self:custom.thumbnail-bucket}
+    events:
+      - s3:
+          bucket: ${self:custom.origin-bucket}
+          event: s3:ObjectCreated:Put
+  on-image-deleted:
+    handler: on-image-deleted/handler.onImageDeleted
+    memorySize: 128
+    timeout: 5
+    environment:
+      BUCKET: ${self:custom.thumbnail-bucket}
+    events:
+      - s3:
+          bucket: ${self:custom.origin-bucket}
+          event: s3:ObjectRemoved:Delete
+  on-thumbnail-added:
+    handler: on-thumbnail-added/handler.onThumbnailAdded
+    memorySize: 128
+    timeout: 5
+    environment:
+      BUCKET: ${self:custom.thumbnail-bucket}
+      FIREBASE: ${self:custom.firebase}
+    events:
+      - s3:
+          bucket: ${self:custom.thumbnail-bucket}
+          event: s3:ObjectCreated:Put
+  on-thumbnail-deleted:
+    handler: on-thumbnail-deleted/handler.onThumbnailDeleted
+    memorySize: 128
+    timeout: 5
+    environment:
+      BUCKET: ${self:custom.thumbnail-bucket}
+      FIREBASE: ${self:custom.firebase}
+    events:
+      - s3:
+          bucket: ${self:custom.thumbnail-bucket}
+          event: s3:ObjectRemoved:Delete
