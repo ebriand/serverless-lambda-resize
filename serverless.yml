@@ -3,7 +3,7 @@ service: serverless-gallery
 custom:
   origin-bucket: zenika-serverless-origin
   thumbnail-bucket: zenika-serverless-thumbnail
-  firebase: https://gallery-ec238.firebaseio.com
+  firebase: https://gallery-b0400.firebaseio.com
 
 provider:
   name: aws
